@@ -1,18 +1,22 @@
 import { Router } from "express";
 import {
-    getSchedules,
-    getSchedule,
-    createSchedule,
-    updateSchedule,
-    deleteSchedule
+  availabilitySchedule,
+  createSchedule,
+  deleteSchedule,
+  getSchedule,
+  getSchedules,
+  updateSchedule,
 } from "../controllers/schedule.controller";
 
-const router = Router();
+const scheduleRouter = Router();
+const doctorRouter = Router();
 
-router.get("/", getSchedules);
-router.get("/:id", getSchedule);
-router.post("/", createSchedule);
-router.put("/:id", updateSchedule);
-router.delete("/:id", deleteSchedule);
+scheduleRouter.get("/", getSchedules);
+scheduleRouter.get("/:id", getSchedule);
+scheduleRouter.post("/", createSchedule);
+scheduleRouter.put("/:id", updateSchedule);
+scheduleRouter.delete("/:id", deleteSchedule);
 
-export default router;
+doctorRouter.get("/availability", availabilitySchedule);
+
+export { scheduleRouter, doctorRouter };
