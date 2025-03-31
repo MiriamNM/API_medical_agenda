@@ -41,32 +41,34 @@ export const deletePatient = async (req: Request, res: Response) => {
   res.json({ message: "Paciente eliminado" });
 };
 
-// export const addMedicalHistory = async (req: Request, res: Response) => {
-//   try {
-//     const { id } = req.params;
-//     const newMedicalHistory = req.body;
-//     const updatedPatient = await patientService.addMedicalHistory(
-//       id,
-//       newMedicalHistory
-//     );
-//     if (!updatedPatient) {
-//       return res.status(404).json({ message: "Paciente no encontrado" });
-//     }
-//     res.status(200).json(updatedPatient);
-//   } catch (error) {
-//     res.status(400).json({ message: "No se pudo actualizar el paciente" });
-//   }
-// };
-
 export const addMedicalHistory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const newMedicalHistory = req.body;
 
-    const updatedPatient = await patientService.addMedicalHistory(
-      id,
-      newMedicalHistory
-    );
+    const patient = await patientService.getPatientById(id);
+    if (!patient) {
+      return res.status(404).json({ message: "Paciente no encontrado" });
+    }
+
+    const existingHistory = patient.medicalHistory || [];
+    const isDuplicate = existingHistory.some((historyItem) => {
+      return (
+        historyItem.medicalConsultation &&
+        new Date(historyItem.medicalConsultation.dateTime).toISOString() ===
+          new Date(newMedicalHistory.medicalConsultation.dateTime).toISOString()
+      );
+    });
+
+    if (isDuplicate) {
+      return res.status(400).json({
+        message: "Ya existe una consulta médica en esta fecha y hora.",
+      });
+    }
+
+    patient.medicalHistory.push(newMedicalHistory);
+    const updatedPatient = await patientService.updatePatient(id, patient);
+
     if (!updatedPatient) {
       return res.status(404).json({ message: "Paciente no encontrado" });
     }
