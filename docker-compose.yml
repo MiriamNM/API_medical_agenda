@@ -22,7 +22,7 @@ services:
     ports:
       - "${PORT}:${PORT}"
     environment:
-      MONGODB_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DATABASE}
+      MONGODB_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@app:27017/${MONGO_DATABASE}
       PORT: ${PORT}
       NODE_ENV: ${NODE_ENV}
 

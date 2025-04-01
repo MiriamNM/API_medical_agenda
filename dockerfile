@@ -4,15 +4,13 @@ WORKDIR /src
 
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm install
 
-# Instala las dependencias de desarrollo para ts-node y typescript
-RUN npm install --save-dev ts-node typescript
+RUN npm install --save-dev typescript ts-node
 
 COPY . .
 
-EXPOSE ${PORT}
+EXPOSE 5050
 
-# Ejecuta ts-node con el archivo server.ts
-CMD ["npx", "ts-node", "src/server.ts"]
+CMD ["npx", "ts-node", "src/server.ts", "run", "start"]
 

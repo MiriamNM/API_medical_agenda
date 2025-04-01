@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/server.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "env": {
+    "MONGODB_URI": "@mongodb-uri",
+    "PORT": "5050",
+    "NODE_ENV": "production"
+  }
+}
