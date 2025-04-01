@@ -1,17 +1,21 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mongo:
-    image: mongo
+    image: mongo:latest
     container_name: mongo
     restart: always
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: medical_agenda
+      MONGO_INITDB_ROOT_PASSWORD: medical_agenda_password
+      MONGO_INITDB_DATABASE: medical_agenda_db
     volumes:
       - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - my_network
 
   app:
     build: .
@@ -22,9 +26,15 @@ services:
     ports:
       - "${PORT}:${PORT}"
     environment:
-      MONGODB_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DATABASE}
+      MONGODB_URI: mongodb://medical_agenda:medical_agenda_password@mongo:27017/medical_agenda_db?authSource=admin
       PORT: ${PORT}
       NODE_ENV: ${NODE_ENV}
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
 
 volumes:
   mongo_data:
