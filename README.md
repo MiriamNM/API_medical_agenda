@@ -56,6 +56,9 @@ Para ejecutar la aplicación localmente con TypeScript, usa ts-node:
     node dist/server.js
 ```
 
+
+![Despliegue local](https://raw.githubusercontent.com/MiriamNM/API_medical_agenda/refs/heads/main/assets/Captura%20de%20pantalla%202025-03-28%20a%20la(s)%204.54.22%E2%80%AFp.m..png)
+
 ### Paso 5: Probar los Endpoints
 Una vez que la aplicación esté corriendo, puedes probar los siguientes endpoints:
 
@@ -83,6 +86,8 @@ Puedes usar herramientas como Postman o cURL para hacer estas peticiones.
 - Desarrollé una función para unificar la disponibilidad de las doctoras a partir de un JSON proporcionado.
 
 - Se expuso un endpoint GET /doctors/availability que devuelve el horario unificado de las doctoras.
+
+![Disponibilidad](https://raw.githubusercontent.com/MiriamNM/API_medical_agenda/refs/heads/main/assets/Captura%20de%20pantalla%202025-03-28%20a%20la(s)%209.57.25%E2%80%AFp.m..png)
 
 #### Tarea 2: Modelado de Base de Datos y Operaciones CRUD
 - MongoDB se utilizó para almacenar la información de los pacientes y sus consultas médicas.
