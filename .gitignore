@@ -35,3 +35,5 @@ Thumbs.db
 .yarn/
 .pnp/
 .pnp.js
+mongo-init.js
+dist/
