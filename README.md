@@ -103,6 +103,8 @@ DELETE /patients/:id: Eliminar un paciente.
 
 POST /patients/:id/medicalHistory
 
+![Esquema Plenna](https://raw.githubusercontent.com/MiriamNM/API_medical_agenda/refs/heads/main/assets/Plenna.drawio.png)
+
 ### Sección 2: Tests Automatizados
 #### Tarea 3: Escribir Pruebas Automatizadas
 - Se utilizaron Jest para escribir pruebas unitarias e integrales.
