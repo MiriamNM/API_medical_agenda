@@ -93,7 +93,7 @@ export const deletePatient = async (
 export const addMedicalHistory = async (
   req: Request,
   res: Response
-): Promise<void> => {
+): Promise<Response> => {
   try {
     const { id } = req.params;
     const { doctorId, clinicId, dateTime, _id } = req.body;
@@ -101,7 +101,7 @@ export const addMedicalHistory = async (
 
     const patient = await patientService.getPatientById(id);
     if (!patient) {
-      res.status(404).json({ message: ERROR_MESSAGES.NOT_FOUND_PATIENT });
+      return res.status(404).json({ message: ERROR_MESSAGES.NOT_FOUND_PATIENT });
     }
 
     const newConsultationDate = new Date(dateTime).toISOString();
@@ -114,18 +114,17 @@ export const addMedicalHistory = async (
     );
 
     if (isDuplicate) {
-      res.status(400).json({
+      return res.status(400).json({
         message: ERROR_MESSAGES.ALREADY_MEDICAL_APPOINTMENT,
       });
     }
 
-    // Agregar la historia médica sin mutar el objeto original
     const updatedPatient = await patientService.updatePatient(id, {
       $push: { medicalHistory: newMedicalHistory },
     });
 
     if (!updatedPatient) {
-      res.status(404).json({ message: ERROR_MESSAGES.NOT_FOUND_PATIENT });
+      return res.status(404).json({ message: ERROR_MESSAGES.NOT_FOUND_PATIENT });
     }
 
     const schedule = await getScheduleByDoctorAndClinic(doctorId, clinicId);
@@ -134,10 +133,10 @@ export const addMedicalHistory = async (
       await updateSchedule(schedule.id, { slotdates: schedule.slotdates });
     }
 
-    res.status(200).json(updatedPatient);
+    return res.status(200).json(updatedPatient);
   } catch (error) {
     console.error(ERROR_MESSAGES.ERROR_ADDING_MEDICAL_HISTORY, error);
-    res.status(500).json({
+    return res.status(500).json({
       message: ERROR_MESSAGES.NOT_UPDATE_PATIENT_CALENDAR,
     });
   }
