@@ -17,7 +17,7 @@ interface IMedicalHistory {
   medicalConsultation: IConsultation[];
 }
 
-interface IPatient extends Document {
+export interface IPatient extends Document {
   firstName: string;
   lastName: string;
   email: string;

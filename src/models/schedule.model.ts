@@ -5,12 +5,12 @@ interface Slot {
   dateTime: Date;
 }
 
-interface SlotDate {
+export interface SlotDate {
   date: Date;
   slots?: Slot[];
 }
 
-interface ISchedule extends Document {
+export interface ISchedule extends Document {
   idDoctor?: string;
   idClinic?: string;
   slotdates: SlotDate[];
@@ -35,4 +35,5 @@ const ScheduleSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<ISchedule>("Schedule", ScheduleSchema);
+const Schedule = mongoose.model<ISchedule>("Schedule", ScheduleSchema);
+export default Schedule;

@@ -1,20 +1,22 @@
 import { Router } from "express";
 import {
-  createPatient,
-  getPatients,
+  addMedicalHistory,
   getPatientById,
+  getPatients,
+  createPatient,
   updatePatient,
   deletePatient,
-  addMedicalHistory,
 } from "../controllers/patient.controller";
 
 const patientRouter = Router();
 
-patientRouter.get("/:id", getPatientById);
-patientRouter.get("/", getPatients);
-patientRouter.post("/", createPatient);
-patientRouter.put("/:id", updatePatient);
-patientRouter.delete("/:id", deletePatient);
-patientRouter.post("/:id/medicalHistory", addMedicalHistory);
+patientRouter.post("/", (req, res) => createPatient(req, res));
+patientRouter.get("/", (req, res) => getPatients(req, res));
+patientRouter.get("/:id", (req, res) => getPatientById(req, res));
+patientRouter.put("/:id", (req, res) => updatePatient(req, res));
+patientRouter.delete("/:id", (req, res) => deletePatient(req, res));
+patientRouter.post("/:id/medicalHistory", (req, res) =>
+  addMedicalHistory(req, res)
+);
 
 export default patientRouter;

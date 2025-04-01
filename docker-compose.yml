@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+
+  app:
+    build: .
+    container_name: myapp
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      MONGODB_URI: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DATABASE}
+      PORT: ${PORT}
+      NODE_ENV: ${NODE_ENV}
+
+volumes:
+  mongo_data:
