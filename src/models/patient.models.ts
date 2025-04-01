@@ -10,7 +10,7 @@ interface IConsultation {
 const consultationSchema = new Schema<IConsultation>({
   idClinic: { type: String, required: true },
   idDoctor: { type: String, required: true },
-  dateTime: { type: Date, required: true },
+  dateTime: { type: Date, required: true, default: Date.now },
 });
 
 interface IMedicalHistory {
