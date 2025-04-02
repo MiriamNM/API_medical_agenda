@@ -96,7 +96,7 @@ export const addMedicalHistory = async (
 ): Promise<Response> => {
   try {
     const { id } = req.params;
-    const { doctorId, clinicId, dateTime, _id } = req.body;
+    const { idDoctor, idClinic, dateTime, scheduleId } = req.body.medicalConsultation;
     const newMedicalHistory = req.body;
 
     const patient = await patientService.getPatientById(id);
@@ -107,6 +107,7 @@ export const addMedicalHistory = async (
     const newConsultationDate = new Date(dateTime).toISOString();
     const isDuplicate = patient.medicalHistory?.some(
       ({ medicalConsultation }) =>
+        Array.isArray(medicalConsultation) && 
         medicalConsultation.some(
           ({ dateTime }) =>
             new Date(dateTime).toISOString() === newConsultationDate
@@ -122,14 +123,14 @@ export const addMedicalHistory = async (
     const updatedPatient = await patientService.updatePatient(id, {
       $push: { medicalHistory: newMedicalHistory },
     });
-
+    
     if (!updatedPatient) {
       return res.status(404).json({ message: ERROR_MESSAGES.NOT_FOUND_PATIENT });
     }
 
-    const schedule = await getScheduleByDoctorAndClinic(doctorId, clinicId);
+    const schedule = await getScheduleByDoctorAndClinic(idDoctor, idClinic);
     if (schedule) {
-      schedule.slotdates = await cleanScheduleSlotDates(_id, dateTime);
+      schedule.slotdates = await cleanScheduleSlotDates(scheduleId, dateTime);
       await updateSchedule(schedule.id, { slotdates: schedule.slotdates });
     }
 
