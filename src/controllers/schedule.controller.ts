@@ -45,10 +45,7 @@ export const getSchedule = async (
   }
 };
 
-export const updateSchedule = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const updateSchedule = async (req: Request, res: Response): Promise<void> => {
   try {
     const updatedSchedule = await scheduleService.updateSchedule(
       req.params.id,
