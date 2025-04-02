@@ -109,6 +109,8 @@ DELETE /patients/:id: Eliminar un paciente.
 POST /patients/:id/medicalHistory
 
 ![Esquema Plenna](https://raw.githubusercontent.com/MiriamNM/API_medical_agenda/refs/heads/main/assets/Plenna.drawio.png)
+![Agregando consulta](https://raw.githubusercontent.com/MiriamNM/API_medical_agenda/refs/heads/main/assets/Captura%20de%20pantalla%202025-04-01%20a%20la(s)%208.47.05%E2%80%AFp.m..png)
+
 
 ### Sección 2: Tests Automatizados
 #### Tarea 3: Escribir Pruebas Automatizadas
